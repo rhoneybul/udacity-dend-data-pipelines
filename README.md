@@ -40,7 +40,7 @@ The following parameters are provided;
 * target_table - the redshift table for which the data will be copied into.
 * file_type - whether the file to be copied into redshift is .csv, or .json.
 * redshift_conn_id - the connection id for the redshift cluster to be copied into.
-* s3_conn_id - the airflow connection established for s3.
+* aws_conn_id - the airflow connection established for s3.
 
 The operator will copy the provided files into the redshift cluster, into the table specified, using the connection parametres provided.
 

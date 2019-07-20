@@ -15,7 +15,7 @@ class StageToRedshiftOperator(BaseOperator):
                  target_table,
                  file_type,
                  redshift_conn_id='amazon-redshift',
-                 s3_conn_id='amazon-s3',
+                 aws_conn_id='amazon-s3',
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
