@@ -94,7 +94,7 @@ load_songplays_table >> load_time_dimension_table
 
 run_quality_checks = DataQualityOperator(
     task_id='Run_data_quality_checks',
-    table="songs",
+    tables=['songs', 'artists', 'users', 'time', 'songplays'],
     dag=dag
 )
 
