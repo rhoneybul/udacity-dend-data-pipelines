@@ -8,7 +8,8 @@ services:
       - POSTGRES_DB=airflow
 
   webserver:
-    image: puckel/docker-airflow:1.10.3
+    build:
+      context: . 
     restart: always
     depends_on:
       - postgres
@@ -19,7 +20,7 @@ services:
       - ./dags:/usr/local/airflow/dags
       - ./plugins:/usr/local/airflow/plugins
     ports:
-      - "8080:8080"
+      - "8000:8080"
     command: webserver
     healthcheck:
       test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]

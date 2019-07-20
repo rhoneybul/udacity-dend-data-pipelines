@@ -16,4 +16,12 @@ $ docker-compose up -d
 
 This will start the airflow web service, and postgres, to store the data required to run apache airflow. 
 
+## Configuration
 
+The following configuration is applied to the DAG to satisfy the requirements;
+
+* The DAG does not have dependencies on past runs.
+* On failure the tasks are retried 3 times.
+* Retries happen every 5 minutes.
+* Catchup is turned off.
+* Do not email on retry.
