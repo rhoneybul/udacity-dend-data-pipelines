@@ -13,7 +13,6 @@ class LoadFactOperator(BaseOperator):
                  # conn_id = your-connection-name
                  sql_statement,
                  target_table,
-                 aws_conn_id='aws-connection',
                  redshift_conn_id='amazon-redshift',
                  *args, **kwargs):
 
@@ -23,16 +22,12 @@ class LoadFactOperator(BaseOperator):
         # self.conn_id = conn_id
 
     def execute(self, context):
-        aws_hook = AwsHook(aws_conn_id)
-        credentials = aws_hook.get_credentials()
-        redshift_hook = PostgresHook('redshift')
+        # aws_hook = AwsHook(aws_conn_id)
+        # credentials = aws_hook.get_credentials()
+        redshift_hook = PostgresHook(redshift_conn_id)
         sql_load_statement='''
         insert into {}
         {}
-        AWS_ACCESS_KEY_ID '{{}}'
-        SECRET_ACCESS_KEY '{{}}'
         '''.format(target_table, 
-                   sql_statement,
-                   credentials.access_key,
-                   credentials.secret_key)
+                   sql_statement)
         redshift_hook.run(sql_load_statement)
