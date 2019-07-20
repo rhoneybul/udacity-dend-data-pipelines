@@ -22,6 +22,11 @@ class StageToRedshiftOperator(BaseOperator):
         # Map params here
         # Example:
         # self.conn_id = conn_id
+        self.s3_file_path = s3_file_path
+        self.target_table = target_table
+        self.file_type = file_type 
+        self.redshift_conn_id = redshift_conn_id
+        self.aws_conn_id = aws_conn_id
 
     def execute(self, context):
         # self.log.info('StageToRedshiftOperator not implemented yet')

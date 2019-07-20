@@ -18,6 +18,8 @@ class DataQualityOperator(BaseOperator):
                  *args, **kwargs):
 
         super(DataQualityOperator, self).__init__(*args, **kwargs)
+        self.tables = tables
+        self.redshift_conn_id = redshift_conn_id
         # Map params here
         # Example:
         # self.conn_id = conn_id

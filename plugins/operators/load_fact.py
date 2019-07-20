@@ -20,6 +20,9 @@ class LoadFactOperator(BaseOperator):
         # Map params here
         # Example:
         # self.conn_id = conn_id
+        self.sql_statement = sql_statement
+        self.target_table = target_table
+        self.redshift_conn_id = redshift_conn_id
 
     def execute(self, context):
         # aws_hook = AwsHook(aws_conn_id)

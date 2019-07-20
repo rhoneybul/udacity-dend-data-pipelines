@@ -17,6 +17,9 @@ class LoadDimensionOperator(BaseOperator):
                  *args, **kwargs):
 
         super(LoadDimensionOperator, self).__init__(*args, **kwargs)
+        self.sql_statement = sql_statement
+        self.target_table = target_table
+        self.redshift_conn_id = redshift_conn_id
         # Map params here
         # Example:
         # self.conn_id = conn_id
