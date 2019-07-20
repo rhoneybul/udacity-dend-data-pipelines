@@ -13,7 +13,7 @@ class StageToRedshiftOperator(BaseOperator):
                  #     redshift_conn_id=your-connection-name
                  s3_file_path,
                  target_table,
-                 file_type='.csv'
+                 file_type,
                  redshift_conn_id='amazon-redshift',
                  aws_conn_id='amazon-s3',
                  *args, **kwargs):
