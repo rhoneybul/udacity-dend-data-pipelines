@@ -11,6 +11,9 @@ class LoadDimensionOperator(BaseOperator):
                  # Define your operators params (with defaults) here
                  # Example:
                  # conn_id = your-connection-name
+                 sql_statement,
+                 target_table,
+                 redshift_conn_id='amazon-redshift'
                  *args, **kwargs):
 
         super(LoadDimensionOperator, self).__init__(*args, **kwargs)
@@ -19,4 +22,10 @@ class LoadDimensionOperator(BaseOperator):
         # self.conn_id = conn_id
 
     def execute(self, context):
-        self.log.info('LoadDimensionOperator not implemented yet')
+        # self.log.info('LoadDimensionOperator not implemented yet')
+        redshift_hook = PostgresHook("redshift")
+        redshift.hook.run(sql_statement)
+        sql_load_statement = '''
+        insert into {}
+        {}
+        '''.format(target_table, sql_statement)
