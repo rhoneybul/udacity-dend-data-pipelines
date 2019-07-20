@@ -11,6 +11,8 @@ class DataQualityOperator(BaseOperator):
                  # Define your operators params (with defaults) here
                  # Example:
                  # conn_id = your-connection-name
+
+                 redshift_conn_id='aws-redshift',
                  *args, **kwargs):
 
         super(DataQualityOperator, self).__init__(*args, **kwargs)
@@ -19,4 +21,4 @@ class DataQualityOperator(BaseOperator):
         # self.conn_id = conn_id
 
     def execute(self, context):
-        self.log.info('DataQualityOperator not implemented yet')
+        # self.log.info('DataQualityOperator not implemented yet')
