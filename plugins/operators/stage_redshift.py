@@ -30,12 +30,18 @@ class StageToRedshiftOperator(BaseOperator):
         COPY {}
         FROM {}
         WITH (FORMAT {})
-        '''.format(target_table, s3_file_path, file_type)
+        ACCESS_KEY_ID '{{}}'
+        SECRET_ACCESS_KEY '{{}}'
+        '''
 
         aws_hook = AwsHook(aws_conn_id)
         credentials = aws_hook.get_credentials()
         redshift_hook = PostgresHook("redshift")
-        redshift_hook.run(sql_statement)
+        redshift_hook.run(sql_statement.format(target_table, 
+                                               s3_file_path,
+                                               file_type,
+                                               credentials.access_key,
+                                               credentials.secret_key))
 
 
 
