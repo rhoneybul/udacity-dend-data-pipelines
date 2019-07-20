@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+skarfrom datetime import datetime, timedelta
 import os
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
@@ -29,11 +29,17 @@ start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
+    s3_file_path="s3://udacity-dend/log_data",
+    target_table='staging_events',
+    file_type=".json",
     dag=dag
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(
     task_id='Stage_songs',
+    s3_file_path='s3://udacity-dend/song_data',
+    target_table='staging_songs',
+    file_type='.json',
     dag=dag
 )
 
