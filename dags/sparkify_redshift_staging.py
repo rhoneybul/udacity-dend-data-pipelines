@@ -56,6 +56,8 @@ stage_songs_to_redshift >> load_songplays_table
 
 load_user_dimension_table = LoadDimensionOperator(
     task_id='Load_user_dim_table',
+    sql_statement=SqlQueries.user_table_insert,
+    target_table='users'
     dag=dag
 )
 
@@ -63,6 +65,8 @@ load_songplays_table >> load_user_dimension_table
 
 load_song_dimension_table = LoadDimensionOperator(
     task_id='Load_song_dim_table',
+    sql_statement=SqlQueries.song_table_insert,
+    target_table='songs'
     dag=dag
 )
 
@@ -70,6 +74,8 @@ load_songplays_table >> load_song_dimension_table
 
 load_artist_dimension_table = LoadDimensionOperator(
     task_id='Load_artist_dim_table',
+    sql_statement=SqlQueries.artist_table_insert,
+    target_table='artists',
     dag=dag
 )
 
@@ -77,6 +83,8 @@ load_songplays_table >> load_artist_dimension_table
 
 load_time_dimension_table = LoadDimensionOperator(
     task_id='Load_time_dim_table',
+    sql_statement=SqlQueries.time_table_insert,
+    target_table='time'
     dag=dag
 )
 
