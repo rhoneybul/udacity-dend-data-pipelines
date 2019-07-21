@@ -14,7 +14,7 @@ class DataQualityOperator(BaseOperator):
                  # Example:
                  # conn_id = your-connection-name
                  tables,
-                 redshift_conn_id='aws-redshift',
+                 redshift_conn_id='amazon-redshift',
                  *args, **kwargs):
 
         super(DataQualityOperator, self).__init__(*args, **kwargs)

@@ -2,6 +2,8 @@ from airflow.hooks.postgres_hook import PostgresHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
+import logging
+
 class LoadDimensionOperator(BaseOperator):
 
     ui_color = '#80BD9E'
@@ -35,6 +37,7 @@ class LoadDimensionOperator(BaseOperator):
             '''.format(self.target_table,
                        self.target_table, 
                        self.sql_statement)
-            redshift_hook.run(sql_statement)
+            logging.info(f"running load dimension::sql_statement::{sql_load_statement}")
+            redshift_hook.run(sql_load_statement)
         except Exception as e:
             raise e
