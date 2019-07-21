@@ -62,7 +62,7 @@ stage_events_to_redshift = StageToRedshiftOperator(
         'ts', 
         'userAgent', 
         'user_id'
-    ]
+    ],
     data_format='s3://udacity-dend/log_json_path.json',
     file_type="JSON",
     dag=dag
@@ -82,7 +82,7 @@ stage_songs_to_redshift = StageToRedshiftOperator(
         'song_id', 
         'title', 
         'year'
-    ]
+    ],
     file_type='JSON',
     dag=dag
 )
