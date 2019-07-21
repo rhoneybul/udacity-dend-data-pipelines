@@ -33,7 +33,8 @@ class LoadFactOperator(BaseOperator):
             insert into {}
             {}
             '''.format(self.target_table, 
-                    sql_statement)
+                       self.sql_statement)
+            logging.info(f'executing load fact table::sql query::{sql_load_statement}')
             redshift_hook.run(sql_load_statement)
         except Exception as e:
             raise e
