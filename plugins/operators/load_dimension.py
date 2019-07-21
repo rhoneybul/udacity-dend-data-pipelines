@@ -29,10 +29,12 @@ class LoadDimensionOperator(BaseOperator):
         try:
             redshift_hook = PostgresHook(self.redshift_conn_id)
             sql_load_statement = '''
+            delete from {}
             insert into {}
             {}
-            '''.format(self.target_table, 
-                    sql_statement)
+            '''.format(self.target_table,
+                       self.target_table, 
+                       self.sql_statement)
             redshift_hook.run(sql_statement)
         except Exception as e:
             raise e

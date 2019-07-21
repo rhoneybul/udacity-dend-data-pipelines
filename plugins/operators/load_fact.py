@@ -32,9 +32,11 @@ class LoadFactOperator(BaseOperator):
         try:
             redshift_hook = PostgresHook(self.redshift_conn_id)
             sql_load_statement='''
+            delete from {}
             insert into {}
             {}
-            '''.format(self.target_table, 
+            '''.format(self.target_table,
+                       self.target_table, 
                        self.sql_statement)
             logging.info(f'executing load fact table::sql query::{sql_load_statement}')
             redshift_hook.run(sql_load_statement)
