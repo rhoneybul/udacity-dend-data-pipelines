@@ -35,61 +35,61 @@ dag = DAG('sparkify_etl_pipeline',
 def begin_exection():
     print('Sparkify ETL pipeline is creating.')
 
-start_operator = PythonOperator(task_id='Begin_execution',  
-                               python_callable=begin_exection,
-                               dag=dag)
+# start_operator = PythonOperator(task_id='Begin_execution',  
+#                                python_callable=begin_exection,
+#                                dag=dag)
 
-stage_events_to_redshift = StageToRedshiftOperator(
-    task_id='Stage_events',
-    s3_file_path="s3://udacity-dend/log_data/",
-    target_table='staging_events',
-    columns=[
-        'artist', 
-        'auth', 
-        'firstname', 
-        'gender',
-        'iteminsession',
-        'lastname',
-        'length',
-        'level',
-        'location',
-        'method',
-        'page', 
-        'registration',
-        'sessionid',
-        'song',
-        'status',
-        'ts', 
-        'userAgent', 
-        'userid'
-    ],
-    data_format='s3://udacity-dend/log_json_path.json',
-    file_type="JSON",
-    dag=dag
-)
+# stage_events_to_redshift = StageToRedshiftOperator(
+#     task_id='Stage_events',
+#     s3_file_path="s3://udacity-dend/log_data/",
+#     target_table='staging_events',
+#     columns=[
+#         'artist', 
+#         'auth', 
+#         'firstname', 
+#         'gender',
+#         'iteminsession',
+#         'lastname',
+#         'length',
+#         'level',
+#         'location',
+#         'method',
+#         'page', 
+#         'registration',
+#         'sessionid',
+#         'song',
+#         'status',
+#         'ts', 
+#         'userAgent', 
+#         'userid'
+#     ],
+#     data_format='s3://udacity-dend/log_json_path.json',
+#     file_type="JSON",
+#     dag=dag
+# )
 
-stage_songs_to_redshift = StageToRedshiftOperator(
-    task_id='Stage_songs',
-    s3_file_path='s3://udacity-dend/song_data/',
-    target_table='staging_songs',
-    columns=[
-        'num_songs',
-        'artist_id',
-        'artist_name',
-        'artist_latitude', 
-        'artist_longitude',
-        'artist_location',
-        'song_id',
-        'title', 
-        'duration', 
-        'year'
-    ],
-    file_type='JSON',
-    dag=dag
-)
+# stage_songs_to_redshift = StageToRedshiftOperator(
+#     task_id='Stage_songs',
+#     s3_file_path='s3://udacity-dend/song_data/',
+#     target_table='staging_songs',
+#     columns=[
+#         'num_songs',
+#         'artist_id',
+#         'artist_name',
+#         'artist_latitude', 
+#         'artist_longitude',
+#         'artist_location',
+#         'song_id',
+#         'title', 
+#         'duration', 
+#         'year'
+#     ],
+#     file_type='JSON',
+#     dag=dag
+# )
 
-start_operator >> stage_events_to_redshift
-start_operator >> stage_songs_to_redshift
+# start_operator >> stage_events_to_redshift
+# start_operator >> stage_songs_to_redshift
 
 load_songplays_table = LoadFactOperator(
     task_id='Load_songplays_fact_table',
@@ -98,8 +98,8 @@ load_songplays_table = LoadFactOperator(
     dag=dag   
 )
 
-stage_events_to_redshift >> load_songplays_table
-stage_songs_to_redshift >> load_songplays_table
+# stage_events_to_redshift >> load_songplays_table
+# stage_songs_to_redshift >> load_songplays_table
 
 load_user_dimension_table = LoadDimensionOperator(
     task_id='Load_user_dim_table',
