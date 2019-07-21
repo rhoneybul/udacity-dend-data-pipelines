@@ -29,7 +29,7 @@ class LoadDimensionOperator(BaseOperator):
         try:
             redshift_hook = PostgresHook(self.redshift_conn_id)
             sql_load_statement = '''
-            delete from {}
+            delete from {};
             insert into {}
             {}
             '''.format(self.target_table,
