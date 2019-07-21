@@ -38,7 +38,7 @@ class StageToRedshiftOperator(BaseOperator):
         # self.log.info('StageToRedshiftOperator not implemented yet')
         try:
             sql_statement = '''
-            DELETE FROM '{}';
+            DELETE FROM {};
             COPY {}
             ({})
             FROM '{}'
