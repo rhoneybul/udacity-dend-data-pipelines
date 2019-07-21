@@ -16,6 +16,7 @@ class StageToRedshiftOperator(BaseOperator):
                  s3_file_path,
                  target_table,
                  file_type,
+                 columns,
                  data_format='auto',
                  redshift_conn_id='amazon-redshift',
                  aws_conn_id='amazon-s3',
@@ -28,6 +29,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.s3_file_path = s3_file_path
         self.target_table = target_table
         self.file_type = file_type 
+        self.columns = columns
         self.data_format = data_format
         self.redshift_conn_id = redshift_conn_id
         self.aws_conn_id = aws_conn_id
@@ -36,7 +38,9 @@ class StageToRedshiftOperator(BaseOperator):
         # self.log.info('StageToRedshiftOperator not implemented yet')
         try:
             sql_statement = '''
+            DELETE FROM '{}'
             COPY {}
+            ({})
             FROM '{}'
             FORMAT {} as '{}'
             ACCESS_KEY_ID '{}'
@@ -50,7 +54,9 @@ class StageToRedshiftOperator(BaseOperator):
             logging.info(f'ACCESS_KEY: {credentials.access_key}')
             logging.info(f'SECRET KEY: {credentials.secret_key}')
 
-            sql_execute_statement = sql_statement.format(self.target_table, 
+            sql_execute_statement = sql_statement.format(self.target_table,
+                                                         self.target_table,
+                                                         self.columns.join(','),
                                                          self.s3_file_path,
                                                          self.file_type,
                                                          self.data_format,

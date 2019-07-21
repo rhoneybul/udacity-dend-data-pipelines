@@ -41,7 +41,7 @@ start_operator = PythonOperator(task_id='Begin_execution',
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
-    s3_file_path="s3://udacity-dend/log_data",
+    s3_file_path="s3://udacity-dend/log_data/s",
     target_table='staging_events',
     data_format='s3://udacity-dend/log_json_path.json',
     file_type="JSON",
@@ -50,7 +50,7 @@ stage_events_to_redshift = StageToRedshiftOperator(
 
 stage_songs_to_redshift = StageToRedshiftOperator(
     task_id='Stage_songs',
-    s3_file_path='s3://udacity-dend/song_data',
+    s3_file_path='s3://udacity-dend/song_data/',
     target_table='staging_songs',
     file_type='JSON',
     dag=dag
