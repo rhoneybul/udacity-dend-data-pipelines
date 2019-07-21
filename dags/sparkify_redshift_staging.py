@@ -18,7 +18,7 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'rhoneybul',
-    'start_date': datetime.datetime.now() - timedelta(10),
+    'start_date': datetime.now() - timedelta(10),
     'depends_on_past': False, 
     'retries': 3,
     'retry_delta': timedelta(minutes=5),
