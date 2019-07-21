@@ -37,9 +37,9 @@ class StageToRedshiftOperator(BaseOperator):
         try:
             sql_statement = '''
             COPY {}
-            FROM {}
+            FROM '{}'
             WITH (FORMAT {})
-            FORMAT {} as {}
+            FORMAT {} as '{}'
             ACCESS_KEY_ID '{{}}'
             SECRET_ACCESS_KEY '{{}}'
             '''
