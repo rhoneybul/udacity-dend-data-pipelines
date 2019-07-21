@@ -98,8 +98,8 @@ load_songplays_table = LoadFactOperator(
     dag=dag   
 )
 
-# stage_events_to_redshift >> load_songplays_table
-# stage_songs_to_redshift >> load_songplays_table
+stage_events_to_redshift >> load_songplays_table
+stage_songs_to_redshift >> load_songplays_table
 
 load_user_dimension_table = LoadDimensionOperator(
     task_id='Load_user_dim_table',
