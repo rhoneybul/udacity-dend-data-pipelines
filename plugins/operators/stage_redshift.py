@@ -53,7 +53,6 @@ class StageToRedshiftOperator(BaseOperator):
             sql_execute_statement = sql_statement.format(self.target_table, 
                                                          self.s3_file_path,
                                                          self.file_type,
-                                                         self.file_type,
                                                          self.data_format,
                                                          credentials.access_key,
                                                          credentials.secret_key)
