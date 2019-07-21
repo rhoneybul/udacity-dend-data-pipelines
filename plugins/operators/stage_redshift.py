@@ -41,7 +41,7 @@ class StageToRedshiftOperator(BaseOperator):
 
         aws_hook = AwsHook(self.aws_conn_id)
         credentials = aws_hook.get_credentials()
-        redshift_hook = PostgresHook("redshift")
+        redshift_hook = PostgresHook(self.redshift_conn_id)
         redshift_hook.run(sql_statement.format(self.target_table, 
                                                self.s3_file_path,
                                                self.file_type,
