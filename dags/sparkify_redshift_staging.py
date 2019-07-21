@@ -43,6 +43,26 @@ stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
     s3_file_path="s3://udacity-dend/log_data/s",
     target_table='staging_events',
+    columns=[
+        'artist', 
+        'auth', 
+        'firstName', 
+        'gender',
+        'itemInSession',
+        'lastName',
+        'length',
+        'level',
+        'location',
+        'method',
+        'page', 
+        'registration',
+        'sessionId',
+        'song',
+        'status',
+        'ts', 
+        'userAgent', 
+        'user_id'
+    ]
     data_format='s3://udacity-dend/log_json_path.json',
     file_type="JSON",
     dag=dag
@@ -52,6 +72,17 @@ stage_songs_to_redshift = StageToRedshiftOperator(
     task_id='Stage_songs',
     s3_file_path='s3://udacity-dend/song_data/',
     target_table='staging_songs',
+    columns=[
+        'artist_id',
+        'artist_latitude', 
+        'artist_location', 
+        'artist_longitude', 
+        'artist_name', 
+        'duration', 
+        'song_id', 
+        'title', 
+        'year'
+    ]
     file_type='JSON',
     dag=dag
 )
