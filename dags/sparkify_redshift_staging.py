@@ -2,8 +2,15 @@ from datetime import datetime, timedelta
 import os
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
-                                LoadDimensionOperator, DataQualityOperator)
+try:
+    from airflow.operators import (
+        StageToRedshiftOperator,
+        LoadFactOperator,
+        LoadDimensionOperator,
+        DataQualityOperator
+    )
+except Exception as e:
+    print('could not import operators', e)
 from helpers import SqlQueries
 
 # AWS_KEY = os.environ.get('AWS_KEY')
@@ -11,7 +18,7 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'rhoneybul',
-    'start_date': datetime(2019, 1, 12),
+    'start_date': datetime.now() - timedelta(1),
     'depends_on_past': False, 
     'retries': 3,
     'retry_delta': timedelta(minutes=5),
@@ -22,7 +29,7 @@ default_args = {
 dag = DAG('sparkify_etl_pipeline',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
-          schedule_interval=None
+          schedule_interval=None,
         )
 
 def begin_exection():

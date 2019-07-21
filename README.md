@@ -55,6 +55,18 @@ We need to configure S3 access for the pipeline, such that it can pull the log a
 
 We will create an IAM user, with 's3 read only' permissions. Then, we shall configure a connection for this, in the airflow dashboard, by adding the access key, and secret key.
 
+### Redshift Access
+ 
+To configure the access to the redshift cluster, we need to create a new connection through the airflow UI.
+
+To do this, we create a new connection with the following;
+
+```
+* Connection Type: postgres (We can use this connection type to communicate with redshift.)
+* Schema: This is the name of the database we are going to access.
+* Port: 5439 (This is the default redshift port, so if you used something different adapt this accordingly.) 
+```
+
 ## Data Pipeline
 
 ### Configuration

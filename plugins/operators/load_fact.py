@@ -27,10 +27,13 @@ class LoadFactOperator(BaseOperator):
     def execute(self, context):
         # aws_hook = AwsHook(aws_conn_id)
         # credentials = aws_hook.get_credentials()
-        redshift_hook = PostgresHook(self.redshift_conn_id)
-        sql_load_statement='''
-        insert into {}
-        {}
-        '''.format(self.target_table, 
-                   sql_statement)
-        redshift_hook.run(sql_load_statement)
+        try:
+            redshift_hook = PostgresHook(self.redshift_conn_id)
+            sql_load_statement='''
+            insert into {}
+            {}
+            '''.format(self.target_table, 
+                    sql_statement)
+            redshift_hook.run(sql_load_statement)
+        except Exception as e:
+            raise e

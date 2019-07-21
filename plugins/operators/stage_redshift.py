@@ -3,6 +3,8 @@ from airflow.contrib.hooks.aws_hook import AwsHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
+import logging
+
 class StageToRedshiftOperator(BaseOperator):
     ui_color = '#358140'
 
@@ -14,7 +16,7 @@ class StageToRedshiftOperator(BaseOperator):
                  s3_file_path,
                  target_table,
                  file_type,
-                 data_format='auto'
+                 data_format='auto',
                  redshift_conn_id='amazon-redshift',
                  aws_conn_id='amazon-s3',
                  *args, **kwargs):
@@ -32,26 +34,29 @@ class StageToRedshiftOperator(BaseOperator):
 
     def execute(self, context):
         # self.log.info('StageToRedshiftOperator not implemented yet')
+        try:
+            sql_statement = '''
+            COPY {}
+            FROM {}
+            WITH (FORMAT {})
+            FORMAT {} as {}
+            ACCESS_KEY_ID '{{}}'
+            SECRET_ACCESS_KEY '{{}}'
+            '''
 
-        sql_statement = '''
-        COPY {}
-        FROM {}
-        WITH (FORMAT {})
-        FORMAT {} as {}
-        ACCESS_KEY_ID '{{}}'
-        SECRET_ACCESS_KEY '{{}}'
-        '''
-
-        aws_hook = AwsHook(self.aws_conn_id)
-        credentials = aws_hook.get_credentials()
-        redshift_hook = PostgresHook(self.redshift_conn_id)
-        redshift_hook.run(sql_statement.format(self.target_table, 
-                                               self.s3_file_path,
-                                               self.file_type,
-                                               self.file_type,
-                                               self.data_format,
-                                               credentials.access_key,
-                                               credentials.secret_key))
+            aws_hook = AwsHook(self.aws_conn_id)
+            credentials = aws_hook.get_credentials()
+            redshift_hook = PostgresHook(self.redshift_conn_id)
+            redshift_hook.run(sql_statement.format(self.target_table, 
+                                                self.s3_file_path,
+                                                self.file_type,
+                                                self.file_type,
+                                                self.data_format,
+                                                credentials.access_key,
+                                                credentials.secret_key))
+        except Exception as e:
+            logging.error(e)
+            raise e
 
 
 
