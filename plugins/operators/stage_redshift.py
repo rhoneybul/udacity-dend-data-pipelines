@@ -39,8 +39,8 @@ class StageToRedshiftOperator(BaseOperator):
             COPY {}
             FROM '{}'
             FORMAT {} as '{}'
-            ACCESS_KEY_ID '{{}}'
-            SECRET_ACCESS_KEY '{{}}'
+            ACCESS_KEY_ID '{}'
+            SECRET_ACCESS_KEY '{}'
             '''
 
             aws_hook = AwsHook(self.aws_conn_id)
@@ -50,14 +50,18 @@ class StageToRedshiftOperator(BaseOperator):
             logging.info(f'ACCESS_KEY: {credentials.access_key}')
             logging.info(f'SECRET KEY: {credentials.secret_key}')
 
+            sql_execute_statement = sql_statement.format(self.target_table, 
+                                                         self.s3_file_path,
+                                                         self.file_type,
+                                                         self.file_type,
+                                                         self.data_format,
+                                                         credentials.access_key,
+                                                         credentials.secret_key)
+
+            logging.info(f'using sql statement: {sql_execute_statement}')
+
             redshift_hook = PostgresHook(self.redshift_conn_id)
-            redshift_hook.run(sql_statement.format(self.target_table, 
-                                                self.s3_file_path,
-                                                self.file_type,
-                                                self.file_type,
-                                                self.data_format,
-                                                credentials.access_key,
-                                                credentials.secret_key))
+            redshift_hook.run(sql_execute_statement)
         except Exception as e:
             logging.error(e)
             raise e
