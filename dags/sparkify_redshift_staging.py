@@ -41,7 +41,7 @@ start_operator = PythonOperator(task_id='Begin_execution',
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
-    s3_file_path="s3://udacity-dend/log_data/s",
+    s3_file_path="s3://udacity-dend/log_data/",
     target_table='staging_events',
     columns=[
         'artist', 
