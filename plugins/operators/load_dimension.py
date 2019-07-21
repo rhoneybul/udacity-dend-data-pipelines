@@ -36,7 +36,7 @@ class LoadDimensionOperator(BaseOperator):
             {}
             insert into {}
             {}
-            '''.format(self.delete_load ? f'delete from {self.target_table};' : '',
+            '''.format(f'delete from {self.target_table};' if self.delete_load else '',
                        self.target_table, 
                        self.sql_statement)
             logging.info(f"running load dimension::sql_statement::{sql_load_statement}")
