@@ -18,7 +18,7 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'rhoneybul',
-    'start_date': datetime.now() - timedelta(1),
+    'start_date': datetime(2019,1,12),
     'depends_on_past': False, 
     'retries': 3,
     'retry_delta': timedelta(minutes=5),
@@ -29,7 +29,7 @@ default_args = {
 dag = DAG('sparkify_etl_pipeline',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
-          schedule_interval=None,
+          schedule_interval='0 * * * *',
         )
 
 def begin_exection():
