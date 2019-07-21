@@ -14,6 +14,7 @@ class StageToRedshiftOperator(BaseOperator):
                  s3_file_path,
                  target_table,
                  file_type,
+                 data_format='auto'
                  redshift_conn_id='amazon-redshift',
                  aws_conn_id='amazon-s3',
                  *args, **kwargs):
@@ -25,6 +26,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.s3_file_path = s3_file_path
         self.target_table = target_table
         self.file_type = file_type 
+        self.data_format = data_format
         self.redshift_conn_id = redshift_conn_id
         self.aws_conn_id = aws_conn_id
 
@@ -35,6 +37,7 @@ class StageToRedshiftOperator(BaseOperator):
         COPY {}
         FROM {}
         WITH (FORMAT {})
+        FORMAT {} as {}
         ACCESS_KEY_ID '{{}}'
         SECRET_ACCESS_KEY '{{}}'
         '''
@@ -45,6 +48,8 @@ class StageToRedshiftOperator(BaseOperator):
         redshift_hook.run(sql_statement.format(self.target_table, 
                                                self.s3_file_path,
                                                self.file_type,
+                                               self.file_type,
+                                               self.data_format,
                                                credentials.access_key,
                                                credentials.secret_key))
 

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
 from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
                                 LoadDimensionOperator, DataQualityOperator)
 from helpers import SqlQueries
@@ -25,12 +25,18 @@ dag = DAG('sparkify_etl_pipeline',
           schedule_interval=None
         )
 
-start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
+def begin_exection():
+    print('Sparkify ETL pipeline is creating.')
+
+start_operator = PythonOperator(task_id='Begin_execution',  
+                               python_callable=begin_exection,
+                               dag=dag)
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
     s3_file_path="s3://udacity-dend/log_data",
     target_table='staging_events',
+    data_format='s3://udacity-dend/log_json_path.json',
     file_type=".json",
     dag=dag
 )
@@ -103,6 +109,11 @@ load_time_dimension_table >> run_quality_checks
 load_song_dimension_table >> run_quality_checks
 load_user_dimension_table >> run_quality_checks
 
-end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
+def stop_execution():
+    print('Sparkify data pipeline has concluded.')
+
+end_operator = PythonOperator(task_id='Stop_execution',
+                              python_callable=stop_execution,
+                              dag=dag)
 
 run_quality_checks >> end_operator
