@@ -37,7 +37,7 @@ class LoadFactOperator(BaseOperator):
             delete from {};
             insert into {}
             {}
-            '''.format(f'delete from {self.target_table};' if self.delete_load else ''
+            '''.format(f'delete from {self.target_table};' if self.delete_load else '',
                        self.target_table,
                        self.target_table, 
                        self.sql_statement)
